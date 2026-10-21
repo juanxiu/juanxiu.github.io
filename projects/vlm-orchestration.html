@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#efede6">
+  <title>VLM·객체 탐지 모델의 SLO 스케줄링 | 김연수</title>
+  <meta name="description" content="CPU·GPU·NPU를 활용해 VLM과 객체 탐지 모델을 함께 실행하는 이기종 오케스트레이션을 연구합니다. 장치별 연산 배치와 실행 순서, 중간 결과 전달·동기화 비용을 고려해 모델별 SLO 충족률을 높이는 것이 목표입니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="VLM·객체 탐지 모델의 SLO 스케줄링 | 김연수">
+  <meta property="og:description" content="CPU·GPU·NPU를 활용해 VLM과 객체 탐지 모델을 함께 실행하는 이기종 오케스트레이션을 연구합니다. 장치별 연산 배치와 실행 순서, 중간 결과 전달·동기화 비용을 고려해 모델별 SLO 충족률을 높이는 것이 목표입니다.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/site.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문 바로가기</a>
+  
+<div class="paper detail-paper research-paper">
+  <header class="masthead"><a class="wordmark" href="../index.html">Yeonsoo Kim</a><div class="masthead-right"><a href="../index.html#projects">프로젝트 목록</a><button class="theme-toggle" type="button" data-theme-toggle aria-label="어두운 테마로 변경" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M20.6 13A8.7 8.7 0 0 1 11 3.4 8.7 8.7 0 1 0 20.6 13Z"/></svg></button></div></header>
+  <div class="detail-topline"><a class="back-link" href="../index.html#research">← 홈페이지로 돌아가기</a><span>Research</span></div>
+  <main id="main">
+    <header class="detail-header"><p class="eyebrow">Research</p><h1>VLM·객체 탐지 모델의 SLO 스케줄링</h1><p class="detail-subtitle">모델별 응답시간 목표를 고려한 CPU·GPU·NPU 이기종 오케스트레이션</p><div class="detail-meta"><span>연구 진행 중</span><span>이화여자대학교 AI컴퓨팅 플랫폼 연구실 · 학부연구생</span></div><p class="detail-lead">CPU·GPU·NPU를 활용해 VLM과 객체 탐지 모델을 함께 실행하는 이기종 오케스트레이션을 연구합니다. 연산을 어느 장치에 배치하고 중간 결과를 언제 넘길지 조정해, 객체 탐지의 프레임 마감과 VLM의 첫 응답 목표를 함께 만족하는 것이 목표입니다.</p><div class="tags"><span class="tag">RK3588</span><span class="tag">CPU · GPU · NPU</span><span class="tag">VLM · 객체 탐지</span><span class="tag">SLO Scheduling</span></div><div class="external-links"></div></header>
+    <div class="detail-layout"><nav class="detail-toc" aria-label="상세 페이지 목차"><a href="#section-1" data-section-link>연구 배경</a><a href="#section-2" data-section-link>연구 필요성</a><a href="#section-3" data-section-link>연구 목적과 수행 내용</a><a href="#section-4" data-section-link>SLO(서비스 수준 목표) 기준</a><a href="#section-5" data-section-link>연구 목표</a></nav><div><section class="detail-section" id="section-1"><h2>연구 배경</h2><p>영상의 객체 탐지와 이미지에 대한 질의응답을 한 엣지 장치에서 처리하는 환경을 다룹니다. CPU·GPU·NPU가 서로 다른 실행 특성을 갖는 환경에서 VLM과 객체 탐지 모델의 연산을 나누어 실행하는 이기종 오케스트레이션을 연구합니다.</p><p>CPU는 요청 관리와 실행 제어를 맡고, GPU와 NPU는 장치가 지원하는 모델 연산을 분담하는 구조를 대상으로 합니다. 각 장치에 연산을 배치하는 것뿐 아니라, 앞선 연산의 중간 결과를 다음 장치에 넘기고 완료를 기다리는 과정까지 조정해야 합니다.</p></section><section class="detail-section" id="section-2"><h2>연구 필요성</h2><div class="section-explanation"><div class="explanation-part"><h3>선행연구</h3><p>LLM의 연산을 이기종 장치에 나누어 실행하거나, VLM의 비전 처리와 언어 생성을 단계별로 최적화하는 선행연구가 진행되어 왔습니다.</p></div><div class="explanation-part"><h3>여전히 남아 있는 문제</h3><p>이러한 모델 내부 최적화를 VLM과 객체 탐지 모델의 동시 실행에 적용할 때는, 두 모델의 자원 경쟁으로 발생하는 실행 대기와 응답 지연을 함께 관리하는 문제가 남습니다.</p><p>본 연구는 VLM과 객체 탐지 모델을 한 엣지 장치에서 동시에 실행하는 상황에 초점을 맞춥니다. 두 모델의 연산을 GPU·NPU에 어떻게 분담하고 어떤 순서로 실행할지 CPU에서 조정하며, 장치 간 중간 결과 전달과 동기화에 걸리는 시간도 함께 고려합니다.</p><p>객체 탐지의 프레임별 마감시간과 VLM의 첫 응답 목표를 함께 만족하려면, 모델별 요구를 반영해 연산 분할과 실행 순서를 조정하는 스케줄링 정책이 필요합니다.</p></div></div></section><section class="detail-section" id="section-3"><h2>연구 목적과 수행 내용</h2><p>CPU·GPU·NPU의 역할을 조정해 객체 탐지의 프레임 마감을 지키면서 VLM의 첫 응답 지연을 제한하는 것이 연구 목적입니다. GPU·NPU 간 연산 분담, 공유 자원의 실행 대기, 장치 간 결과 전달 비용을 함께 고려하는 스케줄링 정책을 연구합니다.</p><div class="section-explanation"><div class="explanation-part"><h3>CPU·GPU·NPU 이기종 오케스트레이션</h3><p>VLM 요청과 객체 탐지 프레임을 별도 큐에서 관리하고, CPU 오케스트레이터가 모델별 지연 목표와 장치별 실행시간을 바탕으로 GPU·NPU의 연산 배치와 실행 순서를 조정하는 구조를 설계합니다. 앞선 연산이 끝나면 중간 결과를 다음 실행 장치에 전달하고, 필요한 연산이 완료된 뒤 후속 작업을 실행하도록 동기화 과정을 관리합니다.</p><p>GPU에 나누어 맡길 연산과 장치 간 전달 방식은 실행 특성 측정 결과를 바탕으로 정합니다.</p></div></div><figure class="detail-figure "><button class="figure-trigger" type="button" data-zoom aria-label="CPU·GPU·NPU 이기종 오케스트레이션 구조: VLM과 객체 탐지 요청을 별도 큐에서 관리하고 CPU가 GPU·NPU 연산 배치와 실행 순서를 제어하며, 장치 사이에 중간 결과를 전달하고 동기화 크게 보기"><img src="../assets/images/vlm-rk3588-slo.svg" alt="CPU·GPU·NPU 이기종 오케스트레이션 구조: VLM과 객체 탐지 요청을 별도 큐에서 관리하고 CPU가 GPU·NPU 연산 배치와 실행 순서를 제어하며, 장치 사이에 중간 결과를 전달하고 동기화" loading="lazy" decoding="async"><span class="zoom-label" aria-hidden="true">크게 보기 ↗</span></button><figcaption>CPU의 실행 제어와 GPU·NPU의 연산 분담, 중간 결과 전달·동기화 흐름입니다.</figcaption></figure></section><section class="detail-section" id="section-4"><h2>SLO(서비스 수준 목표) 기준</h2><p>객체 탐지와 VLM의 지연 목표를 각각 정의하고, 각 목표를 만족한 요청의 비율을 따로 평가합니다.</p><div class="section-explanation"><div class="explanation-part"><h3>객체 탐지 프레임 마감</h3><p>객체 탐지는 영상의 처리 주기를 따라갈 수 있도록 프레임별 마감시간을 둡니다. 30 FPS라면 프레임 간격인 약 33.3ms를 예시 기준으로 삼고, 큐 대기를 포함해 프레임 도착부터 결과 생성까지 걸린 시간으로 마감 충족 여부를 평가합니다. 실제 입력 주기와 마감시간은 모델의 단독 실행 성능을 확인한 뒤 정합니다.</p></div><div class="explanation-part"><h3>VLM 첫 응답 시간(TTFT)</h3><p>VLM은 요청을 받은 뒤 첫 응답이 나오기까지의 대기시간을 관리합니다. 요청 도착부터 첫 출력 토큰 생성까지의 시간(TTFT)을 측정하고, 단독 실행 성능과 서비스가 허용하는 대기시간을 바탕으로 목표를 정합니다.</p></div></div></section><section class="detail-section" id="section-5"><h2>연구 목표</h2><p>VLM과 객체 탐지 모델을 동시에 실행할 때, 객체 탐지의 프레임 마감과 VLM의 첫 응답 목표를 함께 만족하는 스케줄링 정책을 설계하는 것이 목표입니다. CPU·GPU·NPU의 역할과 연산 배치를 조정해 한 모델의 실행이 다른 모델의 응답을 과도하게 지연시키지 않도록 합니다.</p></section></div></div>
+    <nav class="detail-bottom" aria-label="다른 프로젝트"><a href="../index.html#research">← 목록으로</a><a href="argo-cd-agent.html">다음: Argo CD Agent →</a></nav>
+  </main>
+</div>
+<footer class="footer"><span>© 2026 김연수 · Yeonsoo Kim</span><nav class="footer-links" aria-label="외부 링크"><a href="https://github.com/juanxiu" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a><a href="https://www.linkedin.com/in/yeonsoo-kim-a70b68286/" target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span></a><a href="https://juanxiu.tistory.com/" target="_blank" rel="noopener noreferrer">기술 블로그 <span aria-hidden="true">↗</span></a></nav></footer>
+<dialog class="lightbox" data-lightbox aria-label="이미지 크게 보기"><button class="lightbox-close" type="button" data-lightbox-close>닫기 ×</button><div class="lightbox-media"><img alt=""></div><p class="lightbox-caption" data-lightbox-caption></p></dialog>
+
+</body>
+</html>
