@@ -31,5 +31,4 @@
 <text x="851.75" y="397" text-anchor="middle" font-size="18" font-weight="550" fill="#273631"><tspan x="851.75" dy="0">서버가 범위를 제한</tspan><tspan x="851.75" dy="26">필요한 본문만 반환</tspan></text>
 <text x="45" y="477" text-anchor="start" font-size="14" font-weight="450" fill="#376c5c"><tspan x="45" dy="0">서버는 TTL 캐시를 사용하고, 도구 응답 크기를 명시적으로 제한</tspan></text>
 <text x="36" y="564" text-anchor="start" font-size="19" font-weight="650" fill="#376c5c"><tspan x="36" dy="0">파일 전체를 매번 넣지 않고, 도구로 읽은 범위만 다음 모델 입력에 추가</tspan></text>
-<text x="36" y="591" text-anchor="start" font-size="11" font-weight="400" fill="#7a827c"><tspan x="36" dy="0">사내 AI 에이전트 개선기 · 포트폴리오용 재구성</tspan></text>
 </svg>
