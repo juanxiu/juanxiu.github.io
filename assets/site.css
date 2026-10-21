@@ -31,11 +31,6 @@
 
 .feature-role{margin:0 0 10px;font-size:13px;line-height:1.5;font-weight:600;color:var(--accent)}
 .feature-description-list{margin-top:0;padding-left:18px}.feature-description-list li{margin:0 0 10px;padding-left:2px}.feature-description-list li:last-child{margin-bottom:0}
-.featured-intern .feature-grid{grid-template-columns:minmax(0,1fr);gap:26px}
-.featured-intern .intern-metric{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;margin:0 0 16px}
-.featured-intern .intern-metric span{margin-top:0}
-.intern-architecture{margin:0}
-.intern-architecture img{width:100%;height:auto}
 .project-small .project-team{font-size:12px;line-height:1.6;color:var(--muted);margin:0 0 12px}
 
 .section-explanation{margin-top:24px}.explanation-part+.explanation-part{margin-top:26px}.explanation-part h3{font-size:17px;line-height:1.65;font-weight:650;color:var(--ink);margin:0 0 8px}.explanation-part p{margin:0}.explanation-part p+p{margin-top:12px}
