@@ -1,34 +1,87 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="610" viewBox="0 0 1000 610" role="img" aria-labelledby="title desc">
-<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9" fill="none" stroke="#7c8d80" stroke-width="1.4"/></marker></defs>
-<style>text{font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}</style>
-<rect width="1000" height="610" fill="#fffefa"/>
-<title id="title">파일 전체 대신, 필요한 부분만 LLM에 전달</title><desc id="desc">파일 전체를 매번 넣지 않고, 도구로 읽은 범위만 다음 모델 입력에 추가</desc>
-<text x="36" y="45" text-anchor="start" font-size="26" font-weight="720" fill="#273631"><tspan x="36" dy="0">파일 전체 대신, 필요한 부분만 LLM에 전달</tspan></text>
-<text x="36" y="75" text-anchor="start" font-size="15" font-weight="400" fill="#637168"><tspan x="36" dy="0">원문 저장과 모델 입력을 분리한 두 단계의 lazy loading</tspan></text>
-<rect x="24" y="105" width="952" height="185" rx="10" fill="#fcf2ed" stroke="#ead5cb"/>
-<text x="45" y="136" text-anchor="start" font-size="14" font-weight="750" fill="#9b5238"><tspan x="45" dy="0">AS-IS</tspan></text>
-<rect x="45.0" y="156" width="284.6666666666667" height="78" rx="6" fill="#ffffff" stroke="#ead5cb"/>
-<text x="187.33333333333334" y="187" text-anchor="middle" font-size="18" font-weight="550" fill="#273631"><tspan x="187.33333333333334" dy="0">원본 파일은 S3에 저장</tspan><tspan x="187.33333333333334" dy="26">추출한 본문은 DB에 저장</tspan></text>
-<path d="M333.6666666666667 195H351.6666666666667" stroke="#7c8d80" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
-<rect x="357.6666666666667" y="156" width="284.6666666666667" height="78" rx="6" fill="#ffffff" stroke="#ead5cb"/>
-<text x="500.0" y="187" text-anchor="middle" font-size="18" font-weight="550" fill="#273631"><tspan x="500.0" dy="0">매 요청마다</tspan><tspan x="500.0" dy="26">파일 본문 전체 첨부</tspan></text>
-<path d="M646.3333333333334 195H664.3333333333334" stroke="#7c8d80" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
-<rect x="670.3333333333334" y="156" width="284.6666666666667" height="78" rx="6" fill="#ffffff" stroke="#ead5cb"/>
-<text x="812.6666666666667" y="187" text-anchor="middle" font-size="18" font-weight="550" fill="#273631"><tspan x="812.6666666666667" dy="0">필요 여부와 관계없이</tspan><tspan x="812.6666666666667" dy="26">LLM이 전체 본문 처리</tspan></text>
-<text x="45" y="267" text-anchor="start" font-size="14" font-weight="450" fill="#9b5238"><tspan x="45" dy="0">반복되는 파일 입력으로 모델의 컨텍스트가 계속 커짐</tspan></text>
-<rect x="24" y="315" width="952" height="205" rx="10" fill="#eef5ee" stroke="#c9decb"/>
-<text x="45" y="346" text-anchor="start" font-size="14" font-weight="750" fill="#376c5c"><tspan x="45" dy="0">TO-BE</tspan></text>
-<rect x="45.0" y="366" width="206.5" height="78" rx="6" fill="#ffffff" stroke="#c9decb"/>
-<text x="148.25" y="397" text-anchor="middle" font-size="18" font-weight="550" fill="#273631"><tspan x="148.25" dy="0">원문은 S3에 보관</tspan><tspan x="148.25" dy="26">DB에는 메타데이터만</tspan></text>
-<path d="M255.5 405H273.5" stroke="#7c8d80" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
-<rect x="279.5" y="366" width="206.5" height="78" rx="6" fill="#ffffff" stroke="#c9decb"/>
-<text x="382.75" y="397" text-anchor="middle" font-size="18" font-weight="550" fill="#273631"><tspan x="382.75" dy="0">LLM에 먼저 전달</tspan><tspan x="382.75" dy="26">파일명과 ID만</tspan></text>
-<path d="M490.0 405H508.0" stroke="#7c8d80" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
-<rect x="514.0" y="366" width="206.5" height="78" rx="6" fill="#ffffff" stroke="#c9decb"/>
-<text x="617.25" y="397" text-anchor="middle" font-size="18" font-weight="550" fill="#273631"><tspan x="617.25" dy="0">본문이 필요할 때</tspan><tspan x="617.25" dy="26">파일 읽기 도구 호출</tspan></text>
-<path d="M724.5 405H742.5" stroke="#7c8d80" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
-<rect x="748.5" y="366" width="206.5" height="78" rx="6" fill="#ffffff" stroke="#c9decb"/>
-<text x="851.75" y="397" text-anchor="middle" font-size="18" font-weight="550" fill="#273631"><tspan x="851.75" dy="0">서버가 범위를 제한</tspan><tspan x="851.75" dy="26">필요한 본문만 반환</tspan></text>
-<text x="45" y="477" text-anchor="start" font-size="14" font-weight="450" fill="#376c5c"><tspan x="45" dy="0">서버는 TTL 캐시를 사용하고, 도구 응답 크기를 명시적으로 제한</tspan></text>
-<text x="36" y="564" text-anchor="start" font-size="19" font-weight="650" fill="#376c5c"><tspan x="36" dy="0">파일 전체를 매번 넣지 않고, 도구로 읽은 범위만 다음 모델 입력에 추가</tspan></text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="980" viewBox="0 0 1800 980" role="img" aria-labelledby="title desc">
+<title id="title">AI 에이전트 파일 입력 구조 설계</title>
+<desc id="desc">파일명과 ID를 먼저 모델에 전달하고, 본문이 필요할 때 모델이 파일 읽기 도구 호출을 요청합니다. 애플리케이션 서버가 TTL 캐시를 확인하고, 캐시가 없으면 S3에서 원문을 조회합니다. 서버가 크기를 제한한 도구 결과를 모델 입력으로 전달하고, 모델은 이를 바탕으로 답변합니다. 논리 흐름을 나타내며 배포 위치나 모델 제공업체를 지정하지 않습니다.</desc>
+<defs>
+<marker id="green-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 1L9 5L0 9Z" fill="#34715d"/></marker>
+<marker id="orange-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 1L9 5L0 9Z" fill="#b15c31"/></marker>
+<marker id="gray-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 1L9 5L0 9Z" fill="#7c8b83"/></marker>
+</defs>
+<style>text{font-family:Pretendard,'Apple SD Gothic Neo',sans-serif} .icon{fill:none;stroke:#293a35;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}</style>
+<rect width="1800" height="980" fill="#fff"/>
+<text x="64" y="68" text-anchor="start" dominant-baseline="central" font-size="38" font-weight="600" fill="#293a35">AI 에이전트 파일 입력 구조 설계</text>
+<text x="66" y="115" text-anchor="start" dominant-baseline="central" font-size="23" font-weight="400" fill="#66736e">Tool Calling으로 필요한 파일 본문만 모델에 전달</text>
+<rect x="375" y="220" width="1020" height="600" fill="none" stroke="#b8c2bc" stroke-width="1.5"/>
+<rect x="395" y="206" width="255" height="29" fill="#fff"/>
+<text x="410" y="220" text-anchor="start" dominant-baseline="central" font-size="23" font-weight="600" fill="#293a35">AI Agent · 논리 흐름</text>
+<rect x="955" y="270" width="390" height="505" fill="#fafbf9" stroke="#b8c2bc" stroke-width="1.3"/>
+<rect x="974" y="255" width="213" height="30" fill="#fff"/>
+<text x="988" y="270" text-anchor="start" dominant-baseline="central" font-size="23" font-weight="600" fill="#293a35">애플리케이션 서버</text>
+<g transform="translate(78,379)" class="icon" stroke-width="1.8">
+<circle cx="48" cy="20" r="18"/><path d="M12 105V87C12 44 84 44 84 87V105"/>
+</g>
+<text x="126" y="516" text-anchor="middle" dominant-baseline="central" font-size="26" font-weight="600" fill="#293a35">사용자</text>
+<g transform="translate(505,382)" class="icon" stroke="#34715d">
+<rect x="17" y="17" width="70" height="70" rx="5"/>
+<path d="M31 17V5M52 17V5M73 17V5M31 87V99M52 87V99M73 87V99M17 31H5M17 52H5M17 73H5M87 31H99M87 52H99M87 73H99"/>
+</g>
+<text x="557" y="434" text-anchor="middle" dominant-baseline="central" font-size="32" font-weight="600" fill="#34715d">AI</text>
+<text x="557" y="516" text-anchor="middle" dominant-baseline="central" font-size="27" font-weight="600" fill="#293a35">LLM</text>
+<text x="557" y="551" text-anchor="middle" dominant-baseline="central" font-size="20" font-weight="400" fill="#66736e">조회 필요 판단</text>
+<g transform="translate(1102,382)" class="icon">
+<rect x="0" y="0" width="96" height="26" rx="2"/><circle cx="14" cy="13" r="3"/><path d="M49 9H82M49 17H82"/>
+<rect x="0" y="34" width="96" height="26" rx="2"/><circle cx="14" cy="47" r="3"/><path d="M49 43H82M49 51H82"/>
+<rect x="0" y="68" width="96" height="26" rx="2"/><circle cx="14" cy="81" r="3"/><path d="M49 77H82M49 85H82"/>
+</g>
+<text x="1150" y="516" text-anchor="middle" dominant-baseline="central" font-size="26" font-weight="600" fill="#293a35">파일 읽기 도구</text>
+<ns0:svg xmlns:ns0="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 80 80" version="1.1" x="1562" y="382">
+    <ns0:title>Icon-Architecture/64/Arch_Amazon-Simple-Storage-Service_64</ns0:title>
+    <ns0:g id="Icon-Architecture/64/Arch_Amazon-Simple-Storage-Service_64" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <ns0:g id="Icon-Architecture-BG/64/Storage" fill="#7AA116">
+            <ns0:rect id="Rectangle" x="0" y="0" width="80" height="80" />
+        </ns0:g>
+        <ns0:g id="Icon-Service/64/Amazon-Simple-Storage-Service_64" transform="translate(12.999900, 11.999600)" fill="#FFFFFF">
+            <ns0:path d="M47.836,30.893 L48.22,28.189 C51.761,30.31 51.807,31.186 51.8060132,31.21 C51.8,31.215 51.196,31.719 47.836,30.893 L47.836,30.893 Z M45.893,30.353 C39.773,28.501 31.25,24.591 27.801,22.961 C27.801,22.947 27.805,22.934 27.805,22.92 C27.805,21.595 26.727,20.517 25.401,20.517 C24.077,20.517 22.999,21.595 22.999,22.92 C22.999,24.245 24.077,25.323 25.401,25.323 C25.983,25.323 26.511,25.106 26.928,24.761 C30.986,26.682 39.443,30.535 45.608,32.355 L43.17,49.561 C43.163,49.608 43.16,49.655 43.16,49.702 C43.16,51.217 36.453,54 25.494,54 C14.419,54 7.641,51.217 7.641,49.702 C7.641,49.656 7.638,49.611 7.632,49.566 L2.538,12.359 C6.947,15.394 16.43,17 25.5,17 C34.556,17 44.023,15.4 48.441,12.374 L45.893,30.353 Z M2,8.478 C2.072,7.162 9.634,2 25.5,2 C41.364,2 48.927,7.161 49,8.478 L49,8.927 C48.13,11.878 38.33,15 25.5,15 C12.648,15 2.843,11.868 2,8.913 L2,8.478 Z M51,8.5 C51,5.035 41.066,0 25.5,0 C9.934,0 0,5.035 0,8.5 L0.094,9.254 L5.642,49.778 C5.775,54.31 17.861,56 25.494,56 C34.966,56 45.029,53.822 45.159,49.781 L47.555,32.884 C48.888,33.203 49.985,33.366 50.866,33.366 C52.049,33.366 52.849,33.077 53.334,32.499 C53.732,32.025 53.884,31.451 53.77,30.84 C53.511,29.456 51.868,27.964 48.522,26.055 L50.898,9.293 L51,8.5 Z" id="Amazon-Simple-Storage-Service-Icon_64_Squid" />
+        </ns0:g>
+    </ns0:g>
+</ns0:svg>
+<text x="1612" y="516" text-anchor="middle" dominant-baseline="central" font-size="26" font-weight="600" fill="#293a35">Amazon S3</text>
+<text x="1612" y="550" text-anchor="middle" dominant-baseline="central" font-size="20" font-weight="400" fill="#66736e">원본 파일 보관</text>
+<polyline points="185,420 482,420" fill="none" stroke="#34715d" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#green-arrow)"/>
+<circle cx="263" cy="360" r="15" fill="#fff" stroke="#34715d" stroke-width="1.7"/>
+<text x="263" y="360" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#34715d">1</text>
+<text x="363" y="360" text-anchor="middle" dominant-baseline="central" font-size="21" font-weight="400" fill="#293a35">요청 + 파일명과 ID</text>
+<text x="337" y="449" text-anchor="middle" dominant-baseline="central" font-size="18" font-weight="400" fill="#66736e">초기 입력</text>
+<polyline points="632,420 1069,420" fill="none" stroke="#b15c31" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#orange-arrow)"/>
+<circle cx="734" cy="360" r="15" fill="#fff" stroke="#b15c31" stroke-width="1.7"/>
+<text x="734" y="360" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#b15c31">2</text>
+<text x="850" y="360" text-anchor="middle" dominant-baseline="central" font-size="22" font-weight="600" fill="#b15c31">도구 호출 요청</text>
+<text x="843" y="449" text-anchor="middle" dominant-baseline="central" font-size="18" font-weight="400" fill="#66736e">파일 ID 전달</text>
+<g transform="translate(1102,634)" class="icon" stroke="#66736e">
+<rect x="0" y="8" width="76" height="40" rx="2"/><path d="M11 48V58M24 48V58M37 48V58M50 48V58M63 48V58"/>
+<rect x="10" y="18" width="17" height="20"/><rect x="37" y="18" width="17" height="20"/>
+<circle cx="78" cy="41" r="20" fill="#fff"/><path d="M78 29V42L87 47"/>
+</g>
+<polyline points="1150,554 1150,623" fill="none" stroke="#7c8b83" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#gray-arrow)" marker-start="url(#gray-arrow)"/>
+<text x="1226" y="590" text-anchor="middle" dominant-baseline="central" font-size="19" font-weight="400" fill="#66736e">캐시 확인</text>
+<text x="1150" y="724" text-anchor="middle" dominant-baseline="central" font-size="23" font-weight="600" fill="#293a35">TTL 캐시</text>
+<text x="1150" y="752" text-anchor="middle" dominant-baseline="central" font-size="18" font-weight="400" fill="#66736e">조회 결과 재사용</text>
+<polyline points="1233,420 1542,420" fill="none" stroke="#b15c31" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#orange-arrow)" stroke-dasharray="7 6"/>
+<circle cx="1418" cy="293" r="15" fill="#fff" stroke="#b15c31" stroke-width="1.7"/>
+<text x="1418" y="293" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#b15c31">3</text>
+<text x="1442" y="330" text-anchor="middle" dominant-baseline="central" font-size="20" font-weight="400" fill="#b15c31">캐시가 없으면</text>
+<text x="1442" y="357" text-anchor="middle" dominant-baseline="central" font-size="20" font-weight="400" fill="#b15c31">S3에서 원문 조회</text>
+<polyline points="1542,465 1524,465 1524,590 1320,590 1320,470 1233,470" fill="none" stroke="#34715d" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#green-arrow)"/>
+<text x="1466" y="619" text-anchor="middle" dominant-baseline="central" font-size="20" font-weight="400" fill="#34715d">원문 반환</text>
+<polyline points="1069,470 1040,470 1040,618 649,618 649,470 632,470" fill="none" stroke="#34715d" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#green-arrow)"/>
+<circle cx="700" cy="653" r="15" fill="#fff" stroke="#34715d" stroke-width="1.7"/>
+<text x="700" y="653" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#34715d">4</text>
+<text x="840" y="653" text-anchor="middle" dominant-baseline="central" font-size="21" font-weight="600" fill="#34715d">크기를 제한한 본문 반환</text>
+<text x="830" y="689" text-anchor="middle" dominant-baseline="central" font-size="18" font-weight="400" fill="#66736e">도구 결과를 다음 입력에 추가</text>
+<polyline points="482,470 450,470 450,618 207,618 207,475 185,475" fill="none" stroke="#34715d" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#green-arrow)"/>
+<circle cx="259" cy="653" r="15" fill="#fff" stroke="#34715d" stroke-width="1.7"/>
+<text x="259" y="653" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#34715d">5</text>
+<text x="372" y="653" text-anchor="middle" dominant-baseline="central" font-size="20" font-weight="400" fill="#293a35">조회 결과를 반영한 답변</text>
+<path d="M64 876H1736" stroke="#d9dfd9" stroke-width="1.3"/>
+<text x="66" y="922" text-anchor="start" dominant-baseline="central" font-size="23" font-weight="600" fill="#34715d">설계 핵심</text>
+<text x="201" y="922" text-anchor="start" dominant-baseline="central" font-size="25" font-weight="600" fill="#293a35">파일 전체를 매번 첨부하지 않고, 도구가 반환한 본문만 모델 입력에 추가</text>
 </svg>
