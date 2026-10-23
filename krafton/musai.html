@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#efede6">
+  <title>뮤사이, 악기 거래 플랫폼 | 김연수</title>
+  <meta name="description" content="악기 상가를 직접 방문해 거래와 재고 관리 절차를 파악했습니다. 예약과 재고 차감을 하나의 트랜잭션으로 처리하고, 비관적 락으로 동시 예약을 제어했습니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="뮤사이, 악기 거래 플랫폼 | 김연수">
+  <meta property="og:description" content="악기 상가를 직접 방문해 거래와 재고 관리 절차를 파악했습니다. 예약과 재고 차감을 하나의 트랜잭션으로 처리하고, 비관적 락으로 동시 예약을 제어했습니다.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/site.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문 바로가기</a>
+  
+<div class="paper detail-paper">
+  <header class="masthead"><a class="wordmark" href="index.html">Yeonsoo Kim</a><div class="masthead-right"><a href="index.html#projects">프로젝트 목록</a><button class="theme-toggle" type="button" data-theme-toggle aria-label="어두운 테마로 변경" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M20.6 13A8.7 8.7 0 0 1 11 3.4 8.7 8.7 0 1 0 20.6 13Z"/></svg></button></div></header>
+  <div class="detail-topline"><a class="back-link" href="index.html#projects">← 홈페이지로 돌아가기</a><span>Backend project</span></div>
+  <main id="main">
+    <header class="detail-header"><p class="eyebrow">Backend project</p><h1>뮤사이, 악기 거래 플랫폼</h1><p class="detail-subtitle">악기 상가의 예약과 재고를 연결하는 백엔드 개발</p><div class="detail-meta"><span>2024.09 — 2025.01</span><span>세오스 · Backend · Java / Spring Boot</span></div><p class="detail-lead">악기 상가를 직접 방문해 거래와 재고 관리 절차를 파악했습니다. 예약과 재고 차감을 하나의 트랜잭션으로 처리하고, 비관적 락으로 동시 예약을 제어했습니다.</p><div class="tags"><span class="tag">Spring Boot</span><span class="tag">JPA</span><span class="tag">MySQL</span></div><div class="external-links"><a href="https://github.com/TEAM-PEDALGENIE/PedalGenie-Back" target="_blank" rel="noopener noreferrer">GitHub · 백엔드 저장소 <span aria-hidden="true">↗</span></a></div></header>
+    <div class="detail-layout"><nav class="detail-toc" aria-label="상세 페이지 목차"><a href="#section-1" data-section-link>악기 상가의 디지털 전환(DX)을 위한 서비스 구현</a><a href="#section-2" data-section-link>예약 및 재고 동시성 제어</a><a href="#section-3" data-section-link>검색과 서버 오류 모니터링</a><a href="#section-4" data-section-link>현장 협약과 프로젝트 성과</a></nav><div><section class="detail-section" id="section-1"><h2>악기 상가의 디지털 전환(DX)을 위한 서비스 구현</h2><p>팀과 함께 악기 상가를 직접 방문해 점주의 거래 방식과 재고 관리 절차를 파악했습니다. 고객용 예약과 점주용 관리 기능이 하나의 데이터 흐름으로 이어지도록 요구사항을 API 명세와 DB 스키마로 구체화했습니다.</p><figure class="detail-figure "><button class="figure-trigger" type="button" data-zoom aria-label="뮤사이 악기 검색과 대여 예약, 재고 관리 서비스 화면 크게 보기"><img src="../assets/images/musai-service.jpg" alt="뮤사이 악기 검색과 대여 예약, 재고 관리 서비스 화면" loading="lazy" decoding="async"><span class="zoom-label" aria-hidden="true">크게 보기 ↗</span></button><figcaption>악기 검색과 대여 예약을 제공하는 뮤사이 서비스 화면입니다.</figcaption></figure></section><section class="detail-section" id="section-2"><h2>예약 및 재고 동시성 제어</h2><ul><li>악기 대여 예약과 점주의 재고 관리 기능 개발</li><li>예약 저장과 재고 차감을 하나의 트랜잭션으로 묶어 함께 처리</li><li>동시 예약에도 재고 수량이 어긋나지 않도록 비관적 락 적용</li><li>재고 수량과 거래 상태의 변경 이력 기록</li></ul><p class="section-result"><strong>결과</strong>동시 예약에 따른 재고 불일치를 방지하고, 변경 이력으로 예약과 재고 상태를 추적할 수 있도록 했습니다.</p></section><section class="detail-section" id="section-3"><h2>검색과 서버 오류 모니터링</h2><ul><li>데이터베이스 인덱스를 적용해 검색 성능 개선</li><li>QueryDSL로 악기 분류와 대여 가능 여부, 영업시간을 조합한 동적 검색 구현</li><li>서버 예외를 Sentry와 연동하고 오류 발생 알림 설정</li><li>오류 발생 시점과 내용을 확인할 수 있는 모니터링 환경 구성</li></ul></section><section class="detail-section" id="section-4"><h2>현장 협약과 프로젝트 성과</h2><p>예약과 재고, 영업시간, 검색을 포함한 서버 핵심 기능을 개발했습니다. 악기 상가와 서비스 이용 협약을 맺었습니다. 뮤사이 프로젝트로 세아해암학술장학재단 커리어챌린지에 선정돼, 창업 준비 활동을 위한 장학금 300만 원을 지원받았습니다.</p></section></div></div>
+    <nav class="detail-bottom" aria-label="다른 프로젝트"><a href="index.html#projects">← 목록으로</a><a href="vlm-orchestration.html">다음: VLM과 객체 탐지 모델의 이기종 오케스트레이션 →</a></nav>
+  </main>
+</div>
+<footer class="footer"><span>© 2026 김연수 · Yeonsoo Kim</span><nav class="footer-links" aria-label="외부 링크"><a href="https://github.com/juanxiu" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a><a href="https://www.linkedin.com/in/yeonsoo-kim-a70b68286/" target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span></a><a href="https://juanxiu.tistory.com/" target="_blank" rel="noopener noreferrer">기술 블로그 <span aria-hidden="true">↗</span></a></nav></footer>
+<dialog class="lightbox" data-lightbox aria-label="이미지 크게 보기"><button class="lightbox-close" type="button" data-lightbox-close>닫기 ×</button><div class="lightbox-media"><img alt=""></div><p class="lightbox-caption" data-lightbox-caption></p></dialog>
+
+</body>
+</html>
